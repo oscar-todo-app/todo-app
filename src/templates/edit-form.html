@@ -1,0 +1,27 @@
+{{ range .Todos }}
+<div class="w-full todo-table">
+  <tr>
+    <td>
+      <input
+        class="border border-gray-400 px-4 py-2 mb-2 rounded-lg w-64"
+        Pp
+        type="text"
+        name="task"
+        value="{{ .Task_name }}"
+      />
+    </td>
+    <td></td>
+    <td>
+      <button
+        class="btn"
+        hx-put="/edit/{{ .Id }}"
+        hx-include="closest tr"
+        hx-swap="outerHTML"
+        hx-target="#todos"
+      >
+        Save
+      </button>
+    </td>
+  </tr>
+</div>
+{{ end }}

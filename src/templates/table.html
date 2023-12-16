@@ -1,0 +1,27 @@
+<tr class="hover space-x-0">
+  <td class="hover {{if .Status }} line-through {{end}} w-3/5">
+    {{ .Task_name }}
+  </td>
+  <td></td>
+  <td class="space-x-1">
+    <button
+      class="btn"
+      hx-delete="/delete/{{.Id}}"
+      hx-target="closest tr"
+      hx-swap="delete"
+    >
+      Delete
+    </button>
+    <button
+      class="btn text-purple"
+      hx-swap="outerHTML"
+      hx-target="#todos"
+      hx-put="/update/{{.Id}}"
+    >
+      Done
+    </button>
+    <button class="btn" hx-get="/modify/{{.Id}}" hx-target="closest tr">
+      Edit
+    </button>
+  </td>
+</tr>

@@ -1,0 +1,13 @@
+{
+  "devDependencies": {
+    "daisyui": "^3.9.4",
+    "tailwindcss": "^3.3.5"
+  },
+  "dependencies": {
+    "htmx.org": "^1.9.6"
+  },
+  "scripts":{
+    "dev": "npx tailwindcss -i ./static/input.css -o ./static/tailwind.css --watch",
+    "build": "npx tailwindcss -i ./static/input.css -o ./static/tailwind.css"
+  }
+}
