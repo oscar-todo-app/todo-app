@@ -9,7 +9,7 @@ spec:
   generators:
     - git:
         repoURL: https://github.com/oscarsjlh/todo-app
-        revision: MASTER
+        revision: main
         directories:
           - path: k8s/apps/*
   template:
@@ -19,7 +19,7 @@ spec:
       project: "todo"
       source:
         repoURL: https://github.com/oscarsjlh/todo-app
-        targetRevision: MAIN
+        targetRevision: main
         path: "{{.path.path}}"
       destination:
         server: https://kubernetes.default.svc
