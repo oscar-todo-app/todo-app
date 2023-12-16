@@ -16,7 +16,7 @@ spec:
     metadata:
       name: "{{.path.basename}}"
     spec:
-      project: "todo"
+      project: default
       source:
         repoURL: https://github.com/oscarsjlh/todo-app
         targetRevision: main
