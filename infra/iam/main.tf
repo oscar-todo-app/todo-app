@@ -10,7 +10,7 @@ provider "aws" {
 }
 
 
-resource "aws_iam_policy_document" "todo-secrets" {
+data "aws_iam_policy_document" "todo-secrets" {
   statement {
     actions = [
       "secretsmanager:GetSecretValue",
@@ -29,32 +29,14 @@ resource "aws_iam_policy" "todo-secrets" {
 
 }
 
-resource "aws_iam_role" "todo-secrets" {
-  name = "todo-secrets"
-  assume_role_policy = jsondecode({
 
-    "Version" : "2012-10-17",
-    "Statement" : [
-      {
-        "Sid" : "VisualEditor0",
-        "Effect" : "Allow",
-        "Action" : [
-          "secretsmanager:GetSecretValue",
-          "secretsmanager:DescribeSecret"
-        ],
-        "Resource" : var.secretarn
-      }
-    ]
-  })
 
-}
+module "iam_secret-role" {
+  source = "terraform-aws-modules/iam/aws//modules/iam-assumable-role-with-oidc"
 
-resource "aws_iam_openid_connect_provider" "todo-secrets" {
-  client_id_list  = ["sts.amazonaws.com"]
-  thumbprint_list = var.thumbprint_list
-  url             = var.iamurl
-
-}
-resource "aws_iam_" "name" {
-
+  create_role                   = true
+  role_name                     = "todo-secret"
+  provider_url                  = replace(var.provider_url, "https://", "")
+  role_policy_arns              = [aws_iam_policy.todo-secrets.arn]
+  oidc_fully_qualified_subjects = ["system:serviceaccount:todo:secret-sa"]
 }

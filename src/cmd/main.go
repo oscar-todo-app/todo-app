@@ -2,6 +2,7 @@ package main
 
 import (
 	"context"
+	"fmt"
 	"log"
 	"net/http"
 	"os"
@@ -38,9 +39,24 @@ func serverRoutes(app *application) {
 	fs := http.FileServer(http.Dir("./static"))
 	http.Handle("/static/", http.StripPrefix("/static/", fs))
 	http.HandleFunc("/", app.GetTodosHandler)
+	http.HandleFunc("/health", app.Health)
 	http.HandleFunc("/new-todo", app.InsertTodoHandler)
 	http.HandleFunc("/delete/", app.RemoveTodoHandler)
 	http.HandleFunc("/update/", app.MarkTodoDoneHandler)
 	http.HandleFunc("/modify/", app.EditHandlerForm)
 	http.HandleFunc("/edit/", app.EditTodoHandler)
+}
+
+func getdgburl() string {
+	dbPass := os.Getenv("DB_PASSWORD")
+	dbUser := os.Getenv("DB_USER")
+	dbName := os.Getenv("DB_NAME")
+	dbHost := os.Getenv("DB_HOST")
+	production := os.Getenv("PRODUCTION")
+
+	if production != "" {
+		dsn := fmt.Sprintf("postgres://%s:%s@%s/%s?sslmode=disable", dbPass, dbUser, dbHost, dbName)
+		return dsn
+	}
+	return os.Getenv("TODO_DB_DSN")
 }

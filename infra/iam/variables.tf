@@ -1,9 +1,7 @@
 variable "secret_arn" {
   default = ""
 }
-variable "iamurl" {
-  default = ""
-}
-variable "thumbprint_list" {
+
+variable "provider_url" {
   default = ""
 }

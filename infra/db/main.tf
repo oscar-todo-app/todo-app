@@ -23,7 +23,7 @@ resource "aws_db_subnet_group" "todo-db-subnet-group" {
 }
 
 resource "aws_secretsmanager_secret" "db-pass" {
-  name = "db-pass"
+  name = "db-pass-todo"
 }
 
 resource "aws_secretsmanager_secret_version" "db-pass-v" {
@@ -61,4 +61,9 @@ resource "aws_db_instance" "todo-db" {
   password               = random_password.todo-pass.result
   db_name                = "todo"
   db_subnet_group_name   = aws_db_subnet_group.todo-db-subnet-group.name
+}
+
+
+output "secret_arn" {
+  value = aws_secretsmanager_secret.db-pass.arn
 }

@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: todo
+---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  namespace: todo
+  name: secret-sa
+  annotations:
+    eks.amazonaws.com/role-arn: arn:aws:iam::477601539816:role/todo-secret

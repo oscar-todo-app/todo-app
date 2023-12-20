@@ -30,6 +30,13 @@ func (app *application) GetTodosHandler(w http.ResponseWriter, r *http.Request) 
 	}
 }
 
+func (app *application) Health(w http.ResponseWriter, r *http.Request) {
+	_, err := w.Write([]byte("ok"))
+	if err != nil {
+		http.Error(w, "Internal Server Error", http.StatusInternalServerError)
+	}
+}
+
 func (app *application) UpdateHomeHandler(w http.ResponseWriter) {
 	todos, err := app.todos.GetTodo()
 	if err != nil {
