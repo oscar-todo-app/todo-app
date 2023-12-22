@@ -1294,19 +1294,14 @@ html {
   border-bottom-right-radius: var(--rounded-btn, 0.5rem);
 }
 
-.mx-4 {
-  margin-left: 1rem;
-  margin-right: 1rem;
+.mx-0 {
+  margin-left: 0px;
+  margin-right: 0px;
 }
 
 .mx-5 {
   margin-left: 1.25rem;
   margin-right: 1.25rem;
-}
-
-.mx-0 {
-  margin-left: 0px;
-  margin-right: 0px;
 }
 
 .mb-2 {
@@ -1329,8 +1324,12 @@ html {
   height: 100vh;
 }
 
-.w-1\/2 {
-  width: 50%;
+.w-16 {
+  width: 4rem;
+}
+
+.w-3\/5 {
+  width: 60%;
 }
 
 .w-64 {
@@ -1341,44 +1340,8 @@ html {
   width: 100%;
 }
 
-.w-1\/4 {
-  width: 25%;
-}
-
-.w-1 {
-  width: 0.25rem;
-}
-
-.w-5\/6 {
-  width: 83.333333%;
-}
-
-.w-4\/5 {
-  width: 80%;
-}
-
-.w-2\/3 {
-  width: 66.666667%;
-}
-
-.w-3\/5 {
-  width: 60%;
-}
-
-.w-16 {
-  width: 4rem;
-}
-
-.w-10 {
-  width: 2.5rem;
-}
-
 .flex-col {
   flex-direction: column;
-}
-
-.place-content-start {
-  place-content: start;
 }
 
 .content-start {
@@ -1401,24 +1364,6 @@ html {
   --tw-space-x-reverse: 0;
   margin-right: calc(0px * var(--tw-space-x-reverse));
   margin-left: calc(0px * calc(1 - var(--tw-space-x-reverse)));
-}
-
-.space-x-10 > :not([hidden]) ~ :not([hidden]) {
-  --tw-space-x-reverse: 0;
-  margin-right: calc(2.5rem * var(--tw-space-x-reverse));
-  margin-left: calc(2.5rem * calc(1 - var(--tw-space-x-reverse)));
-}
-
-.space-x-5 > :not([hidden]) ~ :not([hidden]) {
-  --tw-space-x-reverse: 0;
-  margin-right: calc(1.25rem * var(--tw-space-x-reverse));
-  margin-left: calc(1.25rem * calc(1 - var(--tw-space-x-reverse)));
-}
-
-.space-x-2 > :not([hidden]) ~ :not([hidden]) {
-  --tw-space-x-reverse: 0;
-  margin-right: calc(0.5rem * var(--tw-space-x-reverse));
-  margin-left: calc(0.5rem * calc(1 - var(--tw-space-x-reverse)));
 }
 
 .space-x-1 > :not([hidden]) ~ :not([hidden]) {
@@ -1459,19 +1404,14 @@ html {
   text-align: left;
 }
 
-.text-3xl {
-  font-size: 1.875rem;
-  line-height: 2.25rem;
-}
-
-.text-xl {
-  font-size: 1.25rem;
-  line-height: 1.75rem;
-}
-
 .text-2xl {
   font-size: 1.5rem;
   line-height: 2rem;
+}
+
+.text-3xl {
+  font-size: 1.875rem;
+  line-height: 2.25rem;
 }
 
 .font-bold {
@@ -1482,19 +1422,14 @@ html {
   font-weight: 600;
 }
 
-.text-white {
-  --tw-text-opacity: 1;
-  color: rgb(255 255 255 / var(--tw-text-opacity));
-}
-
-.text-violet-800 {
-  --tw-text-opacity: 1;
-  color: rgb(91 33 182 / var(--tw-text-opacity));
-}
-
 .text-lime-100 {
   --tw-text-opacity: 1;
   color: rgb(236 252 203 / var(--tw-text-opacity));
+}
+
+.text-white {
+  --tw-text-opacity: 1;
+  color: rgb(255 255 255 / var(--tw-text-opacity));
 }
 
 .line-through {

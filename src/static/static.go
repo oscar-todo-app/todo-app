@@ -5,9 +5,9 @@ import (
 	"io/fs"
 )
 
-//go:embed *.css *.js
+//go:embed *.js *.css
 var assets embed.FS
 
 func Assets() (fs.FS, error) {
-	return fs.Sub(assets, "static")
+	return fs.Sub(assets, ".")
 }

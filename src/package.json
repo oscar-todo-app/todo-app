@@ -8,6 +8,6 @@
   },
   "scripts": {
     "dev": "npx tailwindcss -i ./static/input.css -o ./static/tailwind.css --watch",
-    "build": "npx tailwindcss -i ./static/input.css -o ./public/tailwind.css"
+    "build": "npx tailwindcss -i ./public/tailwind.css -o ./static/tailwind.css"
   }
 }
