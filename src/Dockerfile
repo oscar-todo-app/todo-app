@@ -6,7 +6,7 @@ COPY ./*.js /code
 COPY ./*.json /code
 RUN mkdir /code/static
 RUN mkdir /code/public
-COPY ./static/input.css /code/static
+COPY ./static/input.css /code/static/input.css
 RUN npm run build
 
 
@@ -15,12 +15,13 @@ FROM golang:1.21 as backend
 WORKDIR /workspace
 COPY go.mod ./
 RUN go mod download
-COPY --from=frontend /code/public ./public
 COPY . ./
+COPY --from=frontend /code/public/tailwind.css ./static/
 RUN go build -o ./todo ./cmd/
 
 
-FROM scratch
+FROM busybox:latest
 WORKDIR /
-COPY --from=backend /workspace/todo todo
-ENTRYPOINT ["/todo"]
+COPY --from=backend /workspace/todo /todo
+RUN ls
+CMD ["/todo"]

@@ -11,6 +11,14 @@ services:
       - "5432:5432"
     volumes:
       - /home/oscar/volumes/db:/var/lib/postgresql/data
+  api:
+    build: .
+    ports:
+      - "3000:3000"
+    depends_on:
+      - db
+    environment:
+      TODO_DB_DSN: "postgres://postgres:pa55word@db:5432/tasks?sslmode=disable"
 volumes:
   db:
     driver: local

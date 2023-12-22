@@ -5,3 +5,6 @@ variable "secret_arn" {
 variable "provider_url" {
   default = ""
 }
+variable "provider_arn" {
+  default = ""
+}

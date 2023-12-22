@@ -40,3 +40,46 @@ module "iam_secret-role" {
   role_policy_arns              = [aws_iam_policy.todo-secrets.arn]
   oidc_fully_qualified_subjects = ["system:serviceaccount:todo:secret-sa"]
 }
+
+
+module "cert_manager_irsa_role" {
+  source = "terraform-aws-modules/iam/aws//modules/iam-role-for-service-accounts-eks"
+
+  role_name                     = "cert-manager"
+  attach_cert_manager_policy    = true
+  cert_manager_hosted_zone_arns = ["arn:aws:route53::hostedzone/Z05080821D3KFPK0X4CL1"]
+  oidc_providers = {
+    eks = {
+      provider_arn               = var.provider_arn
+      namespace_service_accounts = ["cert-manager:cert-manager"]
+    }
+  }
+}
+
+module "external_dns_irsa_role" {
+  source = "terraform-aws-modules/iam/aws//modules/iam-role-for-service-accounts-eks"
+
+  role_name                     = "external-dns"
+  attach_external_dns_policy    = true
+  external_dns_hosted_zone_arns = ["arn:aws:route53:::hostedzone/Z05080821D3KFPK0X4CL1"]
+
+  oidc_providers = {
+    eks = {
+      provider_arn               = var.provider_arn
+      namespace_service_accounts = ["external-dns:external-dns"]
+    }
+  }
+
+}
+
+
+output "dns_irsa_role_arn" {
+  value = module.cert_manager_irsa_role.iam_role_arn
+}
+output "external_dns_irsa_role_arn" {
+  value = module.external_dns_irsa_role.iam_role_arn
+}
+
+output "secret_irsa_role_arn" {
+  value = module.iam_secret-role.iam_role_arn
+}

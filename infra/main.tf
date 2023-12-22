@@ -58,6 +58,17 @@ module "eks" {
   }
   vpc_id     = module.vpc.vpc_id
   subnet_ids = module.vpc.private_subnets
+  node_security_group_additional_rules = {
+    dns_all = {
+      description      = "DNS All"
+      protocol         = "-1"
+      from_port        = 53
+      to_port          = 53
+      type             = "egress"
+      cidr_blocks      = ["0.0.0.0/0"]
+      ipv6_cidr_blocks = ["::/0"]
+    }
+  }
   eks_managed_node_groups = {
     general = {
       desired_size = 1
@@ -87,4 +98,11 @@ module "argo" {
   clusterHost  = module.eks.cluster_endpoint
   clusterName  = module.eks.cluster_name
   clusterToken = module.eks.cluster_certificate_authority_data
+}
+
+module "iam" {
+  source       = "./iam/"
+  secret_arn   = module.db.secret_arn
+  provider_url = module.eks.cluster_oidc_issuer_url
+  provider_arn = module.eks.oidc_provider_arn
 }

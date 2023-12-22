@@ -9,6 +9,7 @@ import (
 
 	"github.com/oscarsjlh/todo/internal/data"
 	mg "github.com/oscarsjlh/todo/migrations"
+	"github.com/oscarsjlh/todo/static"
 )
 
 type application struct {
@@ -35,8 +36,8 @@ func main() {
 
 func serverRoutes(app *application) {
 	// use embed for the static files
-
-	fs := http.FileServer(http.Dir("./static"))
+	assets, _ := static.Assets()
+	fs := http.FileServer(http.FS(assets))
 	http.Handle("/static/", http.StripPrefix("/static/", fs))
 	http.HandleFunc("/", app.GetTodosHandler)
 	http.HandleFunc("/health", app.Health)
