@@ -29,7 +29,33 @@ resource "aws_iam_policy" "todo-secrets" {
 
 }
 
-
+resource "aws_iam_policy" "cert-manager" {
+  name        = "cert-manager"
+  description = "cert-manager policy"
+  policy = jsonencode({
+    "Version" : "2012-10-17",
+    "Statement" : [
+      {
+        "Effect" : "Allow",
+        "Action" : "route53:GetChange",
+        "Resource" : "arn:aws:route53:::change/*"
+      },
+      {
+        "Effect" : "Allow",
+        "Action" : [
+          "route53:ChangeResourceRecordSets",
+          "route53:ListResourceRecordSets"
+        ],
+        "Resource" : "arn:aws:route53:::hostedzone/*"
+      },
+      {
+        "Effect" : "Allow",
+        "Action" : "route53:ListHostedZonesByName",
+        "Resource" : "*"
+      },
+    ]
+  })
+}
 
 module "iam_secret-role" {
   source = "terraform-aws-modules/iam/aws//modules/iam-assumable-role-with-oidc"
@@ -43,17 +69,14 @@ module "iam_secret-role" {
 
 
 module "cert_manager_irsa_role" {
-  source = "terraform-aws-modules/iam/aws//modules/iam-role-for-service-accounts-eks"
+  source                        = "terraform-aws-modules/iam/aws//modules/iam-assumable-role-with-oidc"
+  create_role                   = true
+  role_name                     = "todo-secret"
+  provider_url                  = replace(var.provider_url, "https://", "")
+  role_policy_arns              = [aws_iam_policy.cert-manager.arn]
+  oidc_fully_qualified_subjects = ["system:serviceaccount:cert-manager:cert-manager"]
 
-  role_name                     = "cert-manager"
-  attach_cert_manager_policy    = true
-  cert_manager_hosted_zone_arns = ["arn:aws:route53::hostedzone/Z05080821D3KFPK0X4CL1"]
-  oidc_providers = {
-    eks = {
-      provider_arn               = var.provider_arn
-      namespace_service_accounts = ["cert-manager:cert-manager"]
-    }
-  }
+
 }
 
 module "external_dns_irsa_role" {

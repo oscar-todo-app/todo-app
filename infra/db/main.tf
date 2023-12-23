@@ -23,7 +23,7 @@ resource "aws_db_subnet_group" "todo-db-subnet-group" {
 }
 
 resource "aws_secretsmanager_secret" "db-pass" {
-  name = "db-pass-todo"
+  name = "db-pass-new"
 }
 
 resource "aws_secretsmanager_secret_version" "db-pass-v" {
