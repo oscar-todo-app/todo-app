@@ -69,7 +69,7 @@ module "eks" {
         role = "general"
       }
 
-      instance_types = ["t3.medium"]
+      instance_types = ["t3a.xlarge"]
       capacity_type  = "ON_DEMAND"
     }
   }

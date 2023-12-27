@@ -20,6 +20,10 @@ spec:
       source:
         repoURL: https://github.com/oscarsjlh/todo-app
         targetRevision: main
+        helm:
+          releaseName: "{{.path.basename}}"
+          valueFiles:
+            - "Values.yaml"
         path: "{{.path.path}}"
       destination:
         server: https://kubernetes.default.svc
