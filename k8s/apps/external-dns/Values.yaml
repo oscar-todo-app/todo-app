@@ -178,7 +178,7 @@ txtPrefix: ""
 txtSuffix: ""
 
 domainFilters:
-  - oscarcorner.com
+  - arn:aws:route53:::hostedzone/Z05080821D3KFPK0X4CL1
 
 provider: aws
 
