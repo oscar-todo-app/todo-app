@@ -1,6 +1,6 @@
 serviceAccount:
   annotations:
-    eks.amazonaws.com/role-arn: arn:aws:iam::XXXXXXXXXXX:role/cert-manager
+    eks.amazonaws.com/role-arn: arn:aws:iam::477601539816:role/todo-cert-manager
 securityContext:
   fsGroup: 1001
 ingressShim:
