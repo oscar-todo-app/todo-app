@@ -177,8 +177,7 @@ txtPrefix: ""
 # Specifies a suffix for the domain names of TXT records created by the "txt" registry. Optional. Mutually exclusive with `txtPrefix`.
 txtSuffix: ""
 
-domainFilters:
-  - oscarcorner.com
+domainFilters: oscarcorner.com
 
 provider: aws
 
