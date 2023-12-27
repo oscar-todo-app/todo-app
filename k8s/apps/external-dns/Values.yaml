@@ -20,7 +20,7 @@ serviceAccount:
   create: true
   # Annotations to add to the service account
   annotations:
-    eks.amazonaws.com/role-arn: arn:aws:iam::477601539816:role/todo-cert-manager
+    eks.amazonaws.com/role-arn: arn:aws:iam::477601539816:role/external-dns
 
   # Labels to add to the service account
   labels: {}
