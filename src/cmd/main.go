@@ -18,7 +18,7 @@ type application struct {
 
 func main() {
 	ctx := context.Context(context.Background())
-	dsn := os.Getenv("TODO_DB_DSN")
+	dsn := getdgburl()
 	err := mg.MigrateDb(dsn)
 	if err != nil {
 		log.Fatal("Failed to migrate DB")
