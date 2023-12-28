@@ -9,10 +9,11 @@ on:
       - ./src/**
   pull_request:
     branches: [ "main" ]
-
+permissions:
+  contents: read
 jobs:
 
-  build:
+  test:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v3
@@ -25,4 +26,17 @@ jobs:
         go-version: '1.21'
     - name: Test
       run: cd ./src; go test -v ./cmd 
-    
+  lint:
+    name: lint
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-go@v4
+        with:
+          go-version: '1.21'
+          cache: false
+      - name: golangci-lint
+        uses: golangci/golangci-lint-action@v3
+        with: 
+          version: v1.54
+          working-directory: src
