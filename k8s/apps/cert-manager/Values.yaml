@@ -1,3 +1,4 @@
+installCRDs: true
 serviceAccount:
   annotations:
     eks.amazonaws.com/role-arn: arn:aws:iam::477601539816:role/todo-cert-manager
