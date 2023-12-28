@@ -1,6 +1,7 @@
 package internal
 
 import (
+	"log"
 	"os"
 	"testing"
 
@@ -121,7 +122,10 @@ func testEditTodo(t *testing.T, pg *Postgres) {
 	}
 
 	editedArg := "Edited todo"
-	pg.EditTodo(lastTodo.Id, editedArg)
+	err = pg.EditTodo(lastTodo.Id, editedArg)
+	if err != nil {
+		log.Fatalf("Error getting edited todo: %v", err)
+	}
 
 	editedTodo, err := pg.SelectTodo(lastTodo.Id)
 	if err != nil {

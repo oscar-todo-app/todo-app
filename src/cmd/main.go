@@ -34,7 +34,10 @@ func main() {
 		todos: &internal.Postgres{DB: db},
 	}
 	serverRoutes(app)
-	http.ListenAndServe(":3000", nil)
+	err = http.ListenAndServe(":3000", nil)
+	if err != nil {
+		log.Fatal("Unable to start http server")
+	}
 	log.Println("Server running on port 3000")
 }
 
