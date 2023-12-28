@@ -19,6 +19,7 @@ type TodoModel interface {
 	EditTodo(id int, task_name string) error
 	SelectTodo(id int) (*Todo, error)
 	GetLastInsertedTodo() (*Todo, error)
+	Ping(ctx context.Context) error
 }
 type Todo struct {
 	Id        int

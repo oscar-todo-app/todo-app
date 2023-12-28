@@ -7,7 +7,7 @@ import (
 	"net/http"
 	"os"
 
-	"github.com/oscarsjlh/todo/internal/data"
+	internal "github.com/oscarsjlh/todo/internal/data"
 	mg "github.com/oscarsjlh/todo/migrations"
 	"github.com/oscarsjlh/todo/static"
 )
@@ -21,17 +21,21 @@ func main() {
 	dsn := getdgburl()
 	err := mg.MigrateDb(dsn)
 	if err != nil {
+		log.Fatal("Db is not set up properly chekc the env vars")
+	}
+	if err != nil {
 		log.Fatal("Failed to migrate DB")
 	}
 	db, err := internal.NewPool(ctx, dsn)
 	if err != nil {
-		return
+		log.Fatal("Failed to set up DB")
 	}
 	app := &application{
 		todos: &internal.Postgres{DB: db},
 	}
 	serverRoutes(app)
 	http.ListenAndServe(":3000", nil)
+	log.Println("Server running on port 3000")
 }
 
 func serverRoutes(app *application) {
