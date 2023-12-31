@@ -5,7 +5,6 @@ import (
 	"fmt"
 	"log"
 	"os"
-	"sync"
 
 	"github.com/jackc/pgx/v5/pgxpool"
 	_ "github.com/jackc/pgx/v5/stdlib"
@@ -26,11 +25,6 @@ type Todo struct {
 	Task_name string
 	Status    bool
 }
-
-var (
-	pgInstance *Postgres
-	pgOnce     sync.Once
-)
 
 type Postgres struct {
 	DB *pgxpool.Pool

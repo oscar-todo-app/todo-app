@@ -8,12 +8,11 @@ import (
 
 	"github.com/jackc/pgx/v5/pgxpool"
 	_ "github.com/jackc/pgx/v5/stdlib"
-	mg "github.com/oscarsjlh/todo/migrations"
 	"github.com/testcontainers/testcontainers-go"
 	"github.com/testcontainers/testcontainers-go/wait"
-)
 
-var todo *pgxpool.Pool
+	mg "github.com/oscarsjlh/todo/migrations"
+)
 
 const (
 	user     = "postgres"

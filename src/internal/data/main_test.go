@@ -1,6 +1,7 @@
 package internal
 
 import (
+	"log"
 	"os"
 	"testing"
 
@@ -105,6 +106,10 @@ func testMarkTodoAsDone(t *testing.T, pg *Postgres) {
 	}
 
 	todo, err := pg.SelectTodo(lastTodo.Id)
+	if err != nil {
+		log.Fatal("Failed to select todo by id")
+		return
+	}
 	assertEqual(t, todo.Status, true, "Expected todo status to be true")
 }
 
@@ -121,7 +126,10 @@ func testEditTodo(t *testing.T, pg *Postgres) {
 	}
 
 	editedArg := "Edited todo"
-	pg.EditTodo(lastTodo.Id, editedArg)
+	err = pg.EditTodo(lastTodo.Id, editedArg)
+	if err != nil {
+		log.Fatalf("Error getting edited todo: %v", err)
+	}
 
 	editedTodo, err := pg.SelectTodo(lastTodo.Id)
 	if err != nil {
