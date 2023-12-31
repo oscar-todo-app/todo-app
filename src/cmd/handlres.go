@@ -127,6 +127,10 @@ func (app *application) EditTodoHandler(w http.ResponseWriter, r *http.Request) 
 	}
 	idParam := r.URL.Path[len("/edit/"):]
 	id, err := validateIDParam(w, idParam)
+	if err != nil {
+		http.Error(w, "Failed to parse id param from url", http.StatusBadRequest)
+		return
+	}
 	task := r.Form.Get("task")
 	println(task)
 	err = app.todos.EditTodo(id, task)

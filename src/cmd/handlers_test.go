@@ -12,8 +12,9 @@ import (
 	"strings"
 	"testing"
 
-	internal "github.com/oscarsjlh/todo/internal/data"
 	"github.com/stretchr/testify/assert"
+
+	internal "github.com/oscarsjlh/todo/internal/data"
 )
 
 type TestSuite struct {
@@ -161,6 +162,9 @@ func testMarkAsDone(t *testing.T, suite *TestSuite) {
 	suite.app.MarkTodoDoneHandler(w, req)
 	assert.Equal(t, http.StatusOK, w.Code)
 	taskstatus, err := suite.app.todos.SelectTodo(id.Id)
+	if err != nil {
+		t.Fatal("Failed to select todo by id")
+	}
 	if taskstatus.Status != true {
 		t.Fatal("Expected status to be done")
 	}

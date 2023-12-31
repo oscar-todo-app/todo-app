@@ -106,6 +106,10 @@ func testMarkTodoAsDone(t *testing.T, pg *Postgres) {
 	}
 
 	todo, err := pg.SelectTodo(lastTodo.Id)
+	if err != nil {
+		log.Fatal("Failed to select todo by id")
+		return
+	}
 	assertEqual(t, todo.Status, true, "Expected todo status to be true")
 }
 
