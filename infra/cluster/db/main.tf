@@ -68,3 +68,9 @@ resource "aws_db_instance" "todo-db" {
 output "secret_arn" {
   value = aws_secretsmanager_secret.db-pass.arn
 }
+
+output "instance_endpoint" {
+  value = aws_db_instance.todo-db.endpoint
+}
+  
+}

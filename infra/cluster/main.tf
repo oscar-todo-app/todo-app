@@ -109,3 +109,7 @@ output "external-dns" {
 output "secrets-manager" {
   value = module.iam.secret_irsa_role_arn
 }
+output "db_endpoint" {
+  value = module.db.instance_endpoint
+
+}
