@@ -10,6 +10,5 @@ variable "oidc_arn" {
 }
 
 variable "organization" {
-  default = "oscarsjlh"
-
+  default = "oscar-todo-app"
 }
