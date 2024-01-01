@@ -7,7 +7,7 @@ on:
 env:
   AWS_REGION: "eu-west-2"
   AWS_ACCOUNT_ID: "477601539816"
-  TAGS: "${{ env.AWS_ACCOUNT_ID }}.dkr.ecr.${{ env.AWS_REGION }}.amazonaws.com/${{ github.event.repository.name }}"
+  TAGS: "477601539816.dkr.ecr.eu-west-2.amazonaws.com/todo-app"
 jobs:
   deploy:
     name: Push to ECR
