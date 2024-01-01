@@ -7,7 +7,7 @@ on:
 env:
   AWS_REGION: "eu-west-2"
   AWS_ACCOUNT_ID: "477601539816"
-  TAGS: ${{ env.AWS_ACCOUNT_ID }}.dkr.ecr.${{ env.AWS_REGION }}.amazonaws.com/${{ github.event.repository.name }}
+  TAGS: "${{ env.AWS_ACCOUNT_ID }}.dkr.ecr.${{ env.AWS_REGION }}.amazonaws.com/${{ github.event.repository.name }}"
 jobs:
   deploy:
     name: Push to ECR
@@ -36,7 +36,7 @@ jobs:
       - name: Build and push Docker image
         uses: docker/build-push-action@v5
         with:
-          context: ."{{defaultContext}}:src"
+          context: "{{defaultContext}}:src"
           push: true
           platforms: linux/amd64,linux/arm64
           tags: ${{ env.TAGS }}
