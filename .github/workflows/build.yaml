@@ -39,5 +39,5 @@ jobs:
           context: ."{{defaultContext}}:src"
           push: true
           platforms: linux/amd64,linux/arm64
-          tags: ${{ TAGS }}
+          tags: ${{ env.TAGS }}
           labels: ${{ steps.meta.outputs.labels }}
