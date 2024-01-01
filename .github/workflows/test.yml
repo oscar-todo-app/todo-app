@@ -8,24 +8,23 @@ on:
     paths:
       - ./src/**
   pull_request:
-    branches: [ "main" ]
+    branches: ["main"]
 permissions:
   contents: read
 jobs:
-
   test:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v3
+      - uses: actions/checkout@v3
 
-    - name: Set up Go
-      uses: actions/setup-go@v4
-      with:
-        cache-dependency-path: |
-          src/go.sum
-        go-version: '1.21'
-    - name: Test
-      run: cd ./src; go test -v ./cmd 
+      - name: Set up Go
+        uses: actions/setup-go@v4
+        with:
+          cache-dependency-path: |
+            src/go.sum
+          go-version: "1.21"
+      - name: Test
+        run: cd ./src; go test -v ./cmd
   lint:
     name: lint
     runs-on: ubuntu-latest
@@ -37,10 +36,10 @@ jobs:
       - uses: actions/checkout@v3
       - uses: actions/setup-go@v4
         with:
-          go-version: '1.21'
+          go-version: "1.21"
           cache: false
       - name: golangci-lint
         uses: golangci/golangci-lint-action@v3
-        with: 
+        with:
           version: v1.54
           working-directory: src
