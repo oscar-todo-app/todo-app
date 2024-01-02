@@ -69,12 +69,16 @@ module "iam_secret-role" {
 
 
 module "cert_manager_irsa_role" {
-  source                        = "terraform-aws-modules/iam/aws//modules/iam-assumable-role-with-oidc"
-  create_role                   = true
-  role_name                     = "todo-cert-manager"
-  provider_url                  = replace(var.provider_url, "https://", "")
-  role_policy_arns              = [aws_iam_policy.cert-manager.arn]
-  oidc_fully_qualified_subjects = ["system:serviceaccount:cert-manager:cert-manager"]
+  source                     = "terraform-aws-modules/iam/aws//modules/iam-role-for-service-accounts-eks"
+  create_role                = true
+  attach_cert_manager_policy = true
+  role_name                  = "todo-cert-manager"
+  oidc_providers = {
+    eks = {
+      provider_arn               = var.provider_arn
+      namespace_service_accounts = ["cert_manager:cert_manager"]
+    }
+  }
 
 
 }
