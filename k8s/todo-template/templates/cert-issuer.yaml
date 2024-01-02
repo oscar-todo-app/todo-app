@@ -9,11 +9,12 @@ spec:
       name: letsencrypt
     server: https://acme-v02.api.letsencrypt.org/directory
     solvers:
-      - dns01:
-          route53:
-            region: eu-west-2
-            hostedZoneID: Z05080821D3KFPK0X4CL1
-            role: arn:aws:iam::477601539816:role/todo-cert-manager
-      - selector:
-          dnsZones:
-            - "oscarcorner.com"
+    - selector:
+        dnsZones:
+          - "oscarcorner.com"
+      dns01:
+        route53:
+          region: eu-west-2
+          hostedZoneID: Z05080821D3KFPK0X4CL1
+          role: arn:aws:iam::477601539816:role/todo-cert-manager
+     
