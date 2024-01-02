@@ -1,0 +1,11 @@
+The terraform / infra files are split in two folders.
+    - Cluster takes care of:
+        - Creating the db
+        - Creating the VPC
+        - Creating the cluster
+        - Creating the necessary permissions into the cluster.
+        - Installs argocd
+        - Creates db pass secrets.
+    - Repo takes care of:
+        - Creating the ECR repo where we can store the image
+        - Making the iam and oidc permissions so we can push from github actions.
