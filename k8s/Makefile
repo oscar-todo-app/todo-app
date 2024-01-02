@@ -6,4 +6,6 @@ apply-sets:
 	kubectl apply -f ./applicatonset.yaml
 	kubectl apply -f ./todoset.yaml.yaml
 
-all: setup-cluser get-pass apply-sets
+apply-ingress:
+	kubectl apply -f ./ingress.yaml
+all: setup-cluser get-pass apply-sets apply-ingress
