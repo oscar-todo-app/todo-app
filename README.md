@@ -1,12 +1,27 @@
 # Go Based Todo Application with an HTMX and tailwindCSS frontend.
 
 Project info:
-    Todo management sistem with postgresql for long time storage.
-    Deployed on AWS, using EKS, RDS and ECR
+    Todo management system with postgresql for long time storage.
+    Deployed on AWS, using EKS, RDS and ECR, using gitOps principles thakns to ArgoCD
+    CI/CD build with github actions, and testcontainers for integration tests
 
-To set up locally we can use the docker compose on the SRC folder.
+Preview: 
 
-Todo:
- - Finish k8s deployment files
- - Get Certificate working
- - Set up github Actions
+![image](./assets/swappy-20240102_161041.png) 
+
+To set up locally we can use the docker compose on the SRC folder, and the make there.
+
+Check the other readme in the folder with specific details for infra and k8s infra.
+
+
+# Choices made:
+    - Go and postgres and htmx
+        This provides a really nice pattern to build and app, and htmx makes the comunication very easy with the backend.
+    - Separating infra and k8s deployments:
+        This has some advantages and disavantages.
+            Cons: We have more steps to deploy.
+            Pro: It is easier to manage the apps once they are deployed thanks to argocd.
+# Learnings from this project
+    - Imporved golang and postgres skills
+    - Improved aws services ecr eks etc skills..
+    - Improved github actions knowledge.
