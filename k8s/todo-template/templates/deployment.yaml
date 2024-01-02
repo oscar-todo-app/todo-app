@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
       - name: todo-api 
-        image: {{ .Values.imageRepository }}:{{ .Values.imageTag }@{{ .Values.imageSha }}
+        image: {{ .Values.imageRepository }}:{{ .Values.imageTag }}@{{ .Values.imageSha }}
         ports:
         - containerPort: 3000
         env:
