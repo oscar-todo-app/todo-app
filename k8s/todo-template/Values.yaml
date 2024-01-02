@@ -1,4 +1,4 @@
 imageRepository: 477601539816.dkr.ecr.eu-west-2.amazonaws.com/todo
 imgTag: latest
-imgSha: sha256:b67036086b8fd3d40d820488833b960a191ce7829bacf41e6b328099e0dd140e
+imgSha: sha256:71bd705d41baf2e01edb772d24bb3f962d8b5f5b1e96eb27528af53936a1f7e0
 dbHostname: todo-db.cr3zlwandrth.eu-west-2.rds.amazonaws.com:5432
