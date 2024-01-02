@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
       - name: todo-api 
-        image: 477601539816.dkr.ecr.eu-west-2.amazonaws.com/todo-app:latest 
+        image: 477601539816.dkr.ecr.eu-west-2.amazonaws.com/todo-app:latest@sha256:f199707b7992af56d4e30635e59f10ec9bcec2379ed35794640e8ede42b7dc47
         ports:
         - containerPort: 3000
       env:
