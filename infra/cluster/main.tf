@@ -78,7 +78,7 @@ module "eks" {
 module "db" {
   source     = "./db/"
   vpcID      = module.vpc.vpc_id
-  secGroupID = module.eks.cluster_security_group_id
+  secGroupID = module.eks.eks_managed_node_groups.general.node_group_id
   subnets    = module.vpc.private_subnets
 }
 

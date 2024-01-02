@@ -21,8 +21,13 @@ metadata:
     cert-manager.io/cluster-issuer: letsencrypt
 spec:
   ingressClassName: nginx
+  tls:
+  - hosts:
+    - todo.oscarcorner.com
+    secretName: todo-app-tls
   rules:
-  - http:
+  - host: todo.oscarcorner.com
+    http:
       paths:
       - path: /
         pathType: Prefix
