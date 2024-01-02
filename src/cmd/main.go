@@ -63,7 +63,7 @@ func getdgburl() string {
 	production := os.Getenv("PRODUCTION")
 
 	if production != "" {
-		dsn := fmt.Sprintf("postgres://%s:%s@%s/%s?sslmode=require", dbPass, dbUser, dbHost, dbName)
+		dsn := fmt.Sprintf("postgres://%s:%s@%s/%s?sslmode=require", dbUser, dbPass, dbHost, dbName)
 		return dsn
 	}
 	return os.Getenv("TODO_DB_DSN")
