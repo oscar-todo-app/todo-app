@@ -12,8 +12,8 @@ provider "aws" {
 
 resource "random_password" "todo-pass" {
   length           = 16
-  special          = true
-  override_special = "_!%@^"
+  special          = false
+  override_special = ""
 
 }
 
