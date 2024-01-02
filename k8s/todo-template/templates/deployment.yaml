@@ -31,5 +31,5 @@ spec:
       - name: DB_PASSWORD
         valueFrom:
           secretKeyRef: secrets
-          name: todo-db-secret
-          key: db-pass-todo
+            name: todo-db-secret
+            key: db-pass-todo
