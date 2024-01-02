@@ -1,5 +1,7 @@
-serviceAccount:
+cert-manager:
+  serviceAccount:
   annotations:
     eks.amazonaws.com/role-arn: arn:aws:iam::477601539816:role/todo-cert-manager
-securityContext:
-  fsGroup: 1001
+  securityContext:
+    enabled: true
+    fsGroup: 1001
