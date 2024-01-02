@@ -12,7 +12,6 @@ import (
 	"github.com/oscarsjlh/todo/static"
 )
 
-// test
 type application struct {
 	todos internal.TodoModel
 }
