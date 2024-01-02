@@ -4,9 +4,3 @@ serviceAccount:
     eks.amazonaws.com/role-arn: arn:aws:iam::477601539816:role/todo-cert-manager
 securityContext:
   fsGroup: 1001
-ingressShim:
-  defaultACMEChallengeType: dns01
-  defaultACMEDNS01ChallengeProvider: route53
-extraArgs:
-  - --dns01-recursive-nameservers="8.8.8.8:53"
-  - --dns01-recursive-nameservers-only
