@@ -1,0 +1,33 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: todo-app-svc
+  namespace: todo
+  annotations:
+   external-dns.alpha.kubernetes.io/hostname: todo.oscarcorner.com
+spec:
+  type: ClusterIP
+  ports:
+  - port: 3000
+  selector:
+    app: todo
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: todo-app-ingress 
+  namespace: todo
+  annotations:
+    cert-manager.io/cluster-issuer: letsencrypt
+spec:
+  ingressClassName: nginx
+  rules:
+  - http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: todo-app-svc 
+            port:
+              number: 3000

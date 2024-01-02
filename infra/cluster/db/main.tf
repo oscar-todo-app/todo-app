@@ -72,5 +72,3 @@ output "secret_arn" {
 output "instance_endpoint" {
   value = aws_db_instance.todo-db.endpoint
 }
-  
-}
