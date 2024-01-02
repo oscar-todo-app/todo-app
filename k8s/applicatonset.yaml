@@ -22,6 +22,7 @@ spec:
         targetRevision: main
         helm:
           releaseName: "{{.path.basename}}"
+          parameters:
           valueFiles:
             - "Values.yaml"
         path: "{{.path.path}}"
