@@ -2,6 +2,8 @@ name: ecr build
 
 on:
   push:
+    paths:
+      - src/**
     branches: ["main"]
 
 env:
@@ -34,10 +36,16 @@ jobs:
         uses: aws-actions/amazon-ecr-login@v2
 
       - name: Build and push Docker image
+        id: build
         uses: docker/build-push-action@v5
         with:
           context: "{{defaultContext}}:src"
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
           push: true
           platforms: linux/amd64
           tags: ${{ env.TAGS }}
           labels: ${{ steps.meta.outputs.labels }}
+      - name: Update manifest
+        run: |
+          echo 'Sha digest is: ${{}}'
