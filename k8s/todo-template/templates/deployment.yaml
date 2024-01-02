@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
       - name: todo-api 
-        image: 477601539816.dkr.ecr.eu-west-2.amazonaws.com/todo-app:latest@sha256:f199707b7992af56d4e30635e59f10ec9bcec2379ed35794640e8ede42b7dc47
+        image: 477601539816.dkr.ecr.eu-west-2.amazonaws.com/todo-app:latest@sha256:411dd3e6d81693b787d994e8ec82c31257cdf6c2837ca876ca87cc4f634e92ed
         ports:
         - containerPort: 3000
       env:
@@ -31,5 +31,5 @@ spec:
       - name: DB_PASSWORD
         valueFrom:
           secretKeyRef: secrets
-        name: todo-db-secret
-        key: db-pass-todo
+          name: todo-db-secret
+          key: db-pass-todo
