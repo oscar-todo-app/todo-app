@@ -47,5 +47,12 @@ jobs:
           tags: ${{ env.TAGS }}
           labels: ${{ steps.meta.outputs.labels }}
       - name: Update manifest
+        working-directory: ./k8s/todo-template
         run: |
           echo 'Sha digest is: ${{ steps.build.outputs.digest }}'
+          sha="${{ steps.build.outputs.digest }}"
+          sed -i "s/\(imgSha: \).*/\1$sha/" Values.yaml
+          git config --global user.name 'Img updater'
+          git config --global user.emal 'imgupdater@noreply.com'
+          git commit -am "Update sha to $sha"
+          git push

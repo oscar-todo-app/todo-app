@@ -12,6 +12,8 @@ import (
 	"github.com/oscarsjlh/todo/static"
 )
 
+// trigger
+
 type application struct {
 	todos internal.TodoModel
 }
