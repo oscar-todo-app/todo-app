@@ -19,17 +19,17 @@ spec:
         image: 477601539816.dkr.ecr.eu-west-2.amazonaws.com/todo-app:latest@sha256:411dd3e6d81693b787d994e8ec82c31257cdf6c2837ca876ca87cc4f634e92ed
         ports:
         - containerPort: 3000
-      env:
-        - name: DB_USER 
-          value: todo 
-        - name: DB_NAME
-          value: todo
-        - name: DB_HOST
-          value: todo-db.cr3zlwandrth.eu-west-2.rds.amazonaws.com:5432 
-        - name: PRODUCTION
-          value: "true"
-        - name: DB_PASSWORD
-          valueFrom:
-            secretKeyRef: 
-              name: secrets 
-              key: db-pass-todo
+        env:
+          - name: DB_USER 
+            value: todo 
+          - name: DB_NAME
+            value: todo
+          - name: DB_HOST
+            value: todo-db.cr3zlwandrth.eu-west-2.rds.amazonaws.com:5432 
+          - name: PRODUCTION
+            value: "true"
+          - name: DB_PASSWORD
+            valueFrom:
+              secretKeyRef: 
+                name: secrets 
+                key: db-pass-todo
