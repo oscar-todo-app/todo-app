@@ -34,7 +34,7 @@ Check the other readme in the folder with specific details for infra and k8s inf
     - Improved aws services ecr eks etc skills..
     - Improved github actions knowledge.
 
-# Things that could be further imrpoved:
+# Things that could be further improved:
     - Looking into using a better realese tactic follow semver or similar.
     - Implement monitoring and tracing with opentelemetry prometheus etc etc.
     - Create ephemeral enviroments for testing.
