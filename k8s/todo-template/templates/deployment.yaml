@@ -25,7 +25,7 @@ spec:
           - name: DB_NAME
             value: todo
           - name: DB_HOST
-            value: todo-db.cr3zlwandrth.eu-west-2.rds.amazonaws.com:5432 
+            value: todo-db.cr3zlwandrth.eu-west-2.rds.amazonaws.com:5432
           - name: PRODUCTION
             value: "true"
           - name: DB_PASSWORD
