@@ -1,3 +1,3 @@
 imageRepository: 477601539816.dkr.ecr.eu-west-2.amazonaws.com/todo-app
-imageTag: e1ba5c11bb7b3b7c5b68ef37515e6755d5e735cf
+imageTag: c6e79efa1107b5279e77fadc6b0f922bf4e73d9b
 dbHostname: todo-db.cr3zlwandrth.eu-west-2.rds.amazonaws.com:5432
