@@ -3,7 +3,7 @@ module github.com/oscarsjlh/todo
 go 1.21.3
 
 require (
-	github.com/jackc/pgx/v5 v5.5.0
+	github.com/jackc/pgx/v5 v5.5.4
 	github.com/pressly/goose/v3 v3.16.0
 	github.com/stretchr/testify v1.8.4
 	github.com/testcontainers/testcontainers-go v0.26.0
