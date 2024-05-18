@@ -2,14 +2,21 @@ package main
 
 import (
 	"context"
+	"errors"
 	"fmt"
-	"log"
+	"log/slog"
+	"net"
 	"net/http"
 	"os"
+	"os/signal"
+	"time"
 
 	internal "github.com/oscarsjlh/todo/internal/data"
+	logs "github.com/oscarsjlh/todo/logging"
 	mg "github.com/oscarsjlh/todo/migrations"
 	"github.com/oscarsjlh/todo/static"
+	"github.com/oscarsjlh/todo/traces"
+	"go.opentelemetry.io/contrib/instrumentation/net/http/otelhttp"
 )
 
 type application struct {
@@ -17,42 +24,77 @@ type application struct {
 }
 
 func main() {
-	ctx := context.Context(context.Background())
-	dsn := getdgburl()
-	err := mg.MigrateDb(dsn)
+	logger := slog.New(slog.NewJSONHandler(os.Stdout, nil))
+	slog.SetDefault(logger)
+	ctx, stop := signal.NotifyContext(context.Background(), os.Interrupt)
+	defer stop()
+
+	otelShutdown, err := traces.SetupOtelSKD(ctx)
 	if err != nil {
-		log.Fatal("Db is not set up properly chekc the env vars")
+		return
+	}
+	defer func() {
+		err = errors.Join(err, otelShutdown(context.Background()))
+	}()
+	dsn := getdgburl()
+	err = mg.MigrateDb(dsn)
+	if err != nil {
+		slog.Error("Db is not set up properly chekc the env vars")
 	}
 	if err != nil {
-		log.Fatal("Failed to migrate DB")
+		slog.Error("Failed to migrate DB")
 	}
 	db, err := internal.NewPool(ctx, dsn)
 	if err != nil {
-		log.Fatal("Failed to set up DB")
+		slog.Error("Failed to set up DB")
 	}
 	app := &application{
 		todos: &internal.Postgres{DB: db},
 	}
-	serverRoutes(app)
-	err = http.ListenAndServe(":3000", nil)
-	if err != nil {
-		log.Fatal("Unable to start http server")
+	srv := &http.Server{
+		Addr:         ":3000",
+		BaseContext:  func(_ net.Listener) context.Context { return ctx },
+		ReadTimeout:  time.Second,
+		WriteTimeout: 10 * time.Second,
+		Handler:      serverRoutes(app),
 	}
-	log.Println("Server running on port 3000")
+	srvErr := make(chan error, 1)
+	go func() {
+		slog.Info("Server listening in port 3000")
+		srvErr <- srv.ListenAndServe()
+	}()
+	select {
+	case err = <-srvErr:
+		return
+	case <-ctx.Done():
+		stop()
+	}
+	err = srv.Shutdown(context.Background())
+	return
 }
 
-func serverRoutes(app *application) {
+func serverRoutes(app *application) http.Handler {
+	mux := http.NewServeMux()
+
+	handleFunc := func(pattern string, handlerFunc func(http.ResponseWriter, *http.Request)) {
+		// Configure the "http.route" for the HTTP instrumentation.
+		handler := otelhttp.WithRouteTag(pattern, http.HandlerFunc(handlerFunc))
+		mux.Handle(pattern, logs.LoggingMiddleware(handler))
+	}
+
 	// use embed for the static files
 	assets, _ := static.Assets()
 	fs := http.FileServer(http.FS(assets))
-	http.Handle("/static/", http.StripPrefix("/static/", fs))
-	http.HandleFunc("/", app.GetTodosHandler)
-	http.HandleFunc("/health", app.Health)
-	http.HandleFunc("/new-todo", app.InsertTodoHandler)
-	http.HandleFunc("/delete/", app.RemoveTodoHandler)
-	http.HandleFunc("/update/", app.MarkTodoDoneHandler)
-	http.HandleFunc("/modify/", app.EditHandlerForm)
-	http.HandleFunc("/edit/", app.EditTodoHandler)
+	mux.Handle("/static/", http.StripPrefix("/static/", fs))
+	handleFunc("/", app.GetTodosHandler)
+	handleFunc("/health", app.Health)
+	handleFunc("/new-todo", app.InsertTodoHandler)
+	handleFunc("/delete/", app.RemoveTodoHandler)
+	handleFunc("/update/", app.MarkTodoDoneHandler)
+	handleFunc("/modify/", app.EditHandlerForm)
+	handleFunc("/edit/", app.EditTodoHandler)
+	handler := otelhttp.NewHandler(mux, "/")
+	return handler
 }
 
 func getdgburl() string {

@@ -7,14 +7,20 @@ import (
 	"strings"
 
 	internal "github.com/oscarsjlh/todo/internal/data"
+	"go.opentelemetry.io/otel"
+	"golang.org/x/exp/slog"
 )
+
+var tracer = otel.Tracer("todo.handler")
 
 // TodoData is the data passed to the template
 // improve GetTodosHandler
 func (app *application) GetTodosHandler(w http.ResponseWriter, r *http.Request) {
+	_, span := tracer.Start(r.Context(), "GetTodosHandler")
+	defer span.End()
 	todos, err := app.todos.GetTodo()
 	if err != nil {
-		log.Printf("failed to connect to db %v", err)
+		slog.Error("failed to connect to db %v", err)
 		http.Error(w, "Internal Server Error", http.StatusInternalServerError)
 		return
 	}

@@ -1,6 +1,6 @@
 FROM  node:21-alpine as frontend
 WORKDIR /code
-COPY ./package.json /code/
+COPY ./package.json package-lock.json /code/
 RUN npm install
 COPY ./*.js /code
 COPY ./*.json /code
