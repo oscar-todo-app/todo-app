@@ -4,6 +4,7 @@ import (
 	"context"
 	"fmt"
 	"log"
+	"log/slog"
 	"net/http"
 	"os"
 
@@ -13,12 +14,14 @@ import (
 )
 
 type application struct {
-	todos internal.TodoModel
+	todos  internal.TodoModel
+	logger *slog.Logger
 }
 
 func main() {
 	ctx := context.Context(context.Background())
 	dsn := getdgburl()
+	logger := slog.New(slog.NewTextHandler(os.Stdout, nil))
 	err := mg.MigrateDb(dsn)
 	if err != nil {
 		log.Fatal("Db is not set up properly chekc the env vars")
@@ -31,28 +34,31 @@ func main() {
 		log.Fatal("Failed to set up DB")
 	}
 	app := &application{
-		todos: &internal.Postgres{DB: db},
+		todos:  &internal.Postgres{DB: db},
+		logger: logger,
 	}
-	serverRoutes(app)
-	err = http.ListenAndServe(":3000", nil)
+	port := ":3000"
+	logger.Info("Starting server", "addr", port)
+	err = http.ListenAndServe(port, app.serverRoutes())
 	if err != nil {
 		log.Fatal("Unable to start http server")
 	}
-	log.Println("Server running on port 3000")
 }
 
-func serverRoutes(app *application) {
+func (app *application) serverRoutes() http.Handler {
 	// use embed for the static files
+	mux := http.NewServeMux()
 	assets, _ := static.Assets()
 	fs := http.FileServer(http.FS(assets))
-	http.Handle("/static/", http.StripPrefix("/static/", fs))
-	http.HandleFunc("/", app.GetTodosHandler)
-	http.HandleFunc("/health", app.Health)
-	http.HandleFunc("/new-todo", app.InsertTodoHandler)
-	http.HandleFunc("/delete/", app.RemoveTodoHandler)
-	http.HandleFunc("/update/", app.MarkTodoDoneHandler)
-	http.HandleFunc("/modify/", app.EditHandlerForm)
-	http.HandleFunc("/edit/", app.EditTodoHandler)
+	mux.Handle("/static/", http.StripPrefix("/static/", fs))
+	mux.HandleFunc("/", app.GetTodosHandler)
+	mux.HandleFunc("/health", app.Health)
+	mux.HandleFunc("/new-todo", app.InsertTodoHandler)
+	mux.HandleFunc("/delete/", app.RemoveTodoHandler)
+	mux.HandleFunc("/update/", app.MarkTodoDoneHandler)
+	mux.HandleFunc("/modify/", app.EditHandlerForm)
+	mux.HandleFunc("/edit/", app.EditTodoHandler)
+	return app.logRequest(commonHeaders(mux))
 }
 
 func getdgburl() string {
@@ -63,7 +69,7 @@ func getdgburl() string {
 	production := os.Getenv("PRODUCTION")
 
 	if production != "" {
-		dsn := fmt.Sprintf("postgres://%s:%s@%s/%s?sslmode=require", dbUser, dbPass, dbHost, dbName)
+		dsn := fmt.Sprintf("postgres://%s:%s@%s/%s?sslmode=disable", dbUser, dbPass, dbHost, dbName)
 		return dsn
 	}
 	return os.Getenv("TODO_DB_DSN")
