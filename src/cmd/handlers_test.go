@@ -25,7 +25,7 @@ type TestSuite struct {
 func (suite *TestSuite) SetUpTest() {
 	suite.server = httptest.NewServer(
 		http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-			serverRoutes(suite.app)
+			suite.app.serverRoutes()
 		}),
 	)
 }
