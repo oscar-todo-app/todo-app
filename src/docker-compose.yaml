@@ -19,6 +19,8 @@ services:
       - db
     environment:
       TODO_DB_DSN: "postgres://postgres:pa55word@db:5432/tasks?sslmode=disable"
+  test:
+    image: play-test
 volumes:
   db:
     driver: local

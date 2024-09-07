@@ -1,50 +1,39 @@
 <!doctype html>
 <html lang="en">
-  <head>
-    <title>Todos</title>
-    <script src="/static/htmx.min.js"></script>
-    <link href="/static/tailwind.css" rel="stylesheet" />
-  </head>
-  <body>
-    <div class="flex flex-col mx-5 justify-center h-screen" id="todos">
-      <h1 class="text-3xl text-lime-100 font-bold mb-4 justify-start">Todos</h1>
-      <form
-        class="items-center mb-4"
-        hx-put="/new-todo"
-        hx-trigger="submit"
-        hx-target="#todos"
-      >
-        <input
-          type="text"
-          placeholder="Enter new todo"
-          class="border border-gray-400 px-4 py-2 mb-2 rounded-lg w-64"
-          id="todo"
-          name="todo"
-        />
-        <button
-          type="submit"
-          class="bg-blue-500 hover:bg-blue-700 text-white font-semibold px-4 py-2 rounded-lg"
-        >
-          Add Todo
-        </button>
-      </form>
-      <div class="w-full">
-        <table>
-          <thead>
-            <tr class="">
-              <th
-                class="text-2xl text-lime-100 mx-0 w-16 content-start text-left"
-              >
-                Action
-              </th>
-              <th class="w-64"></th>
-            </tr>
-          </thead>
-          <tbody>
-            {{ range .Todos }} {{ template "table.html" .}} {{ end }}
-          </tbody>
-        </table>
-      </div>
+
+<head>
+  <title>Todos</title>
+  <script src="/static/htmx.min.js"></script>
+  <link href="/static/tailwind.css" rel="stylesheet" />
+</head>
+
+<body>
+  <div class="flex flex-col mx-5 justify-center h-screen" id="todos">
+    <h1 class="text-3xl text-lime-100 font-bold mb-4 justify-start">Todos</h1>
+    <form class="items-center mb-4" hx-put="/new-todo" hx-trigger="submit" hx-target="#todos">
+      <input type="text" placeholder="Enter new todo" class="border border-gray-400 px-4 py-2 mb-2 rounded-lg w-64"
+        id="todo" name="todo" />
+      <button type="submit" id="todo-submit"
+        class="bg-blue-500 hover:bg-blue-700 text-white font-semibold px-4 py-2 rounded-lg">
+        Add Todo
+      </button>
+    </form>
+    <div class="w-full">
+      <table>
+        <thead>
+          <tr class="">
+            <th class="text-2xl text-lime-100 mx-0 w-16 content-start text-left">
+              Action
+            </th>
+            <th class="w-64"></th>
+          </tr>
+        </thead>
+        <tbody>
+          {{ range .Todos }} {{ template "table.html" .}} {{ end }}
+        </tbody>
+      </table>
     </div>
-  </body>
+  </div>
+</body>
+
 </html>

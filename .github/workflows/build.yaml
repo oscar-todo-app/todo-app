@@ -56,6 +56,6 @@ jobs:
           sha="${{ github.sha }}"
           sed -i "s/\(imageTag: \).*/\1$sha/" Values.yaml
           git config --global user.name "Img updater"
-          git config --global user.emal "imgupdater@noreply.com"
+          git config --global user.email "imgupdater@noreply.com"
           git commit -am "Update sha to $sha"
           git push
